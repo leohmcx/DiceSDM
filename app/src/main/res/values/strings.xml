@@ -5,8 +5,21 @@
     <string name="a_face_sorteada_foi">A face sorteada foi:</string>
     <string name="jogar">Jogar</string>
     <string name="resultado">resultado</string>
+    <string name="compartilhar">Compartilhar</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="modo_texto">Modo Texto</string>
+    <string name="modo_grafico">Modo Gráfico</string>
+    <string name="selecione_dados">Selecione número de dados</string>
+    <string name="numero_faces">Entre com o número de faces</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="salvar">Salvar</string>
+    <string name="clique_jogar_dado">Clique no botão abaixo para jogar o dado</string>
+    <string name="ifsp">IFSP - São Carlos</string>
+    <string name="sair">Sair</string>
     <string-array name="numero_dados">
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string name="menu_aberto">Menu Aberto</string>
+    <string name="menu_fechado">Menu Fechado</string>
 </resources>

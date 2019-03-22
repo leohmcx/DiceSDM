@@ -1,14 +1,17 @@
 package br.edu.ifsp.scl.sdm.dicesdm
 
+import android.content.Intent
+import android.content.Intent.ACTION_SEND;
+import android.content.Intent.EXTRA_TEXT;
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
+import android.widget.ShareActionProvider
+import br.edu.ifsp.scl.sdm.dicesdm.ConfigSingleton.Modos.MODO_GRAFICO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.startActivity
@@ -16,6 +19,12 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     val geradorRandomico: Random = Random(System.currentTimeMillis())
+    // Intent que será associada ao ShareActionProvider do MenuItem
+    var compartilharIntent: Intent = Intent(ACTION_SEND)
+
+    init {
+        compartilharIntent.type = "text/*"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         menuLateralDrawerLayout.addDrawerListener(abreFechaToogle)
         abreFechaToogle.syncState() // mantem o ícone do botão confome status do menu.
         menuNavigationView.setNavigationItemSelectedListener { onNavigationItemSelected(it) }
+        substituiFragment(MODO_GRAFICO) // coloca o modo grafico como modo padrão para abertura do jogo.
     }
 
     fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -68,6 +78,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // referencia o id e qual lugar quero criar o menu, no caso o menu que vem parametrizado.
         menuInflater.inflate(R.menu.menu, menu)
+        val compartilharMenuItem: MenuItem? = menu?.findItem(R.id.compartilharMenuItem)
+        val compartilharSap: ShareActionProvider = MenuItemCompat.getActionProvider(compartilharMenuItem) as ShareActionProvider
+
+        // Setando Intent do SAP
+        compartilharIntent.putExtra(EXTRA_TEXT, packageName)
+        compartilharSap.setShareIntent(compartilharIntent)
+
         return true // se criar o menu tem que retornar verdadeiro
     }
 
@@ -80,30 +97,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /*fun jogarDado(view: View) {
-        if (view == jogarDadoButton) {
-            val numDices: Int = numDicesSpinner.selectedItem.toString().toInt()
-            val numFaces = numFacesEditText.text.toString().toInt()
-            if (numFaces > 6) {
-                resultadoImageView.visibility = View.GONE
-                resultado2imageView.visibility = View.GONE
-            } else {
-                resultadoImageView.visibility = View.VISIBLE
-                if (numDices == 2) {
-                    resultado2imageView.visibility = View.VISIBLE
-                } else {
-                    resultado2imageView.visibility = View.GONE
-                }
-            }
-            var resultadoText = ""
-            for (i in 1..numDices) {
-                val resultado = geradorRandomico.nextInt(numFaces) + 1
-                resultadoText = "${resultadoText} $resultado"
-                val imageView: ImageView = if (i == 1) resultadoImageView else resultado2imageView
-                val resourceName = "dice_${resultado}"
-                imageView.setImageResource(resources.getIdentifier(resourceName, "drawable", packageName))
-                resultadoTextView.text = "A face sorteada foi a ${resultadoText}"
-            }
-        }
-    }*/
+    private fun substituiFragment(modo: String) {
+        val modoJogoFragment = if (modo == MODO_GRAFICO) ModoGraficoFragment() else ModoTextoFragment()
+
+        // Transação para substituição de Fragment
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentJogoFl, modoJogoFragment, modo)
+        fragmentTransaction.commit()
+    }
 }

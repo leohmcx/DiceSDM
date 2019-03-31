@@ -8,10 +8,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.ShareActionProvider
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ShareActionProvider
 import br.edu.ifsp.scl.sdm.dicesdm.ConfigSingleton.Modos.MODO_GRAFICO
+import br.edu.ifsp.scl.sdm.dicesdm.ConfigSingleton.Modos.MODO_TEXTO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.startActivity
@@ -51,11 +52,11 @@ class MainActivity : AppCompatActivity() {
         var retorno: Boolean = false
         when (item.itemId) {
             R.id.modoTextoMenuItem -> {
-                //TODO()
+                substituiFragment(MODO_TEXTO)
                 retorno = true
             }
             R.id.modoGraficoMenuItem -> {
-                TODO()
+                substituiFragment(MODO_GRAFICO)
                 retorno = true
             }
             R.id.sairMenuItem -> {

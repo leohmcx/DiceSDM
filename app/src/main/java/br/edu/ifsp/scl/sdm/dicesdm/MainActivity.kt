@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(menuLateralDrawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (menuLateralDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             menuLateralDrawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed() // se o menu ja estiver recuado ele fecha o aplicativo.

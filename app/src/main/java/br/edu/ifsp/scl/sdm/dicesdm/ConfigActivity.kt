@@ -12,7 +12,7 @@ class ConfigActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_config)
 
         // Restauração de Configurações
-        val selecionado = if(ConfigSingleton.config.numDados == 1) 0 else 1
+        val selecionado = if (ConfigSingleton.config.numDados == 1) 0 else 1
         numDicesSpinner.setSelection(selecionado)
         numFacesEditText.setText(ConfigSingleton.config.numFaces.toString())
 
@@ -21,7 +21,7 @@ class ConfigActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if(v == salvarBt) {
+        if (v == salvarBt) {
             ConfigSingleton.config.numDados = numDicesSpinner.selectedItem.toString().toInt()
             ConfigSingleton.config.numFaces = numFacesEditText.text.toString().toInt()
         }
